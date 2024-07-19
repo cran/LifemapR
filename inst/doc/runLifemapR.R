@@ -2,19 +2,20 @@
 knitr::opts_chunk$set(echo = TRUE)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  remotes::install_github("damiendevienne/LifemapR")
+#  remotes::install_github("Lifemap-ToL/LifemapR")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  require("LifemapR")
 
 ## ----echo = FALSE, results=FALSE, warning=FALSE-------------------------------
-require("LifemapR")
+require("LifemapR", quietly = TRUE)
 
 data(eukaryotes_1000)
 LM_eukaryotes <- build_Lifemap(eukaryotes_1000, "ncbi")
 
 ## ----echo = FALSE-------------------------------------------------------------
-LM_eukaryotes$df[6:10,1:5]
+if(is.lifemap_obj(LM_eukaryotes))
+  LM_eukaryotes$df[6:10,1:5]
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  require("LifemapR")
