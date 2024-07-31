@@ -36,19 +36,21 @@
 build_Lifemap <- function(df, basemap = c("ncbi", "base", "fr", "virus"), verbose = TRUE) {
   
   basemap <- match.arg(arg = basemap, choices = basemap)
-  if(is.null(df$taxid)) {
+  if (is.null(df$taxid)) {
     stop('The dataframe must at least contain a "taxid" column')
   }
   # create a new "environment" to store the full data
-  if(!exists("lifemap_basemap_envir", where = .GlobalEnv)) lifemap_basemap_envir <- new.env()
+  if (!exists("lifemap_basemap_envir", where = .GlobalEnv)) { 
+    lifemap_basemap_envir <- new.env()
+  }
   
   ## SET DATASETS ASDRESSES
   # getting the right URL depending on the basemap wanted
-  if(basemap == "ncbi") {
+  if (basemap == "ncbi") {
     basemap_url <- "https://lifemap-ncbi.univ-lyon1.fr/data/lmdata.Rdata"
-  } else if(basemap == "fr") {
+  } else if (basemap == "fr") {
     basemap_url <- "https://lifemap-fr.univ-lyon1.fr/data/lmdata.Rdata"
-  } else if(basemap == "base") {
+  } else if (basemap == "base") {
     basemap_url <- "https://lifemap.univ-lyon1.fr/data/lmdata.Rdata"
   }
   # else if(basemap == "virus") {
@@ -58,13 +60,24 @@ build_Lifemap <- function(df, basemap = c("ncbi", "base", "fr", "virus"), verbos
     stop(sprintf('%s is not a working basemap, try c("base", "fr", "ncbi" or "virus")', basemap))
   }
   
-  # download full data for chosen basemap
-  if(verbose) cat("Downloading basemap coordinates...\n")
-  
-  # control to test if the url is valid
-  if(!url.exists(basemap_url)) {
+  y <- tryCatch({
+    load(url(basemap_url), envir = lifemap_basemap_envir)
+  },
+  warning = function(w) {
     message("The Lifemap server or some remote lifemap files cannot be reached. Please try again later.")
-  } else {
+    return(NA)
+  },
+  error = function(e) {
+    message("The Lifemap server or some remote lifemap files cannot be reached. Please try again later.")
+    return(NA)
+  }
+  )
+  
+  if (!is.na(y)) {
+    # download full data for chosen basemap
+    if (verbose) {
+      cat("Downloading basemap coordinates...\n")
+    }
     load(url(basemap_url), envir = lifemap_basemap_envir)
     
     # add LUCA
@@ -73,17 +86,21 @@ build_Lifemap <- function(df, basemap = c("ncbi", "base", "fr", "virus"), verbos
     
     # get info for unique taxids (then we work with df_distinct, not df anymore)
     df_distinct <- dplyr::distinct(df, .data$taxid, .keep_all = TRUE)
-    if(nrow(df_distinct) != nrow(df)) {
-      warning(sprintf("%s duplicated TaxIDs were removed \n",nrow(df)-nrow(df_distinct)))
+    if (nrow(df_distinct) != nrow(df)) {
+        warning(sprintf("%s duplicated TaxIDs were removed \n", nrow(df) - nrow(df_distinct)))
     }
     
     # get data
-    if(verbose) cat("Getting info for requested taxids...\n")
+    if (verbose) {
+      cat("Getting info for requested taxids...\n")
+    }
     
     # get index of requested taxids
     indexes <- fastmatch::fmatch(df_distinct$taxid, lifemap_basemap_envir$DF$taxid)
-    if(sum(is.na(indexes)) > 0) {
-      warning(sprintf("%s TaxID(s) could not be found: %s \n",sum(is.na(indexes)), paste(df_distinct$taxid[is.na(indexes)], sep=",")))
+    if (sum(is.na(indexes)) > 0) {
+        warning(sprintf("%s TaxID(s) could not be found: %s \n",
+                        sum(is.na(indexes)), 
+                        paste(df_distinct$taxid[is.na(indexes)], sep = ",")))
     }
     
     # create new df with only existing taxids
@@ -96,8 +113,8 @@ build_Lifemap <- function(df, basemap = c("ncbi", "base", "fr", "virus"), verbos
     ANCESTORS <- lifemap_basemap_envir$DF[fastmatch::fmatch(real_ancestors, lifemap_basemap_envir$DF$taxid), ]
     
     # add type
-    DATA0$type<-"requested"
-    ANCESTORS$type<-"ancestor"
+    DATA0$type <- "requested"
+    ANCESTORS$type <- "ancestor"
     # bind all
     DATA1 <- rbind(DATA0, ANCESTORS)
     
@@ -111,5 +128,7 @@ build_Lifemap <- function(df, basemap = c("ncbi", "base", "fr", "virus"), verbos
     class(lm_obj) <- c("lifemap_obj", "list")
     
     return(lm_obj)
+  } else {
+    return(NA)
   }
 }

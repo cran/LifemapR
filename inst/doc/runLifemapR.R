@@ -1,19 +1,19 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----install, eval = FALSE----------------------------------------------------
 #  remotes::install_github("Lifemap-ToL/LifemapR")
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----load, eval = FALSE-------------------------------------------------------
 #  require("LifemapR")
 
-## ----echo = FALSE, results=FALSE, warning=FALSE-------------------------------
+## ----buildLF, eval = TRUE, echo = FALSE, results = FALSE, warning = FALSE-----
 require("LifemapR", quietly = TRUE)
 
 data(eukaryotes_1000)
 LM_eukaryotes <- build_Lifemap(eukaryotes_1000, "ncbi")
 
-## ----echo = FALSE-------------------------------------------------------------
+## ----printLF, eval = TRUE, echo = FALSE---------------------------------------
 if(is.lifemap_obj(LM_eukaryotes))
   LM_eukaryotes$df[6:10,1:5]
 
@@ -40,55 +40,52 @@ if(is.lifemap_obj(LM_eukaryotes))
 #  lifemap(LM_kraken) +
 #    lm_markers(var_fillColor = "coverage_percent", fillColor = "PiYG")
 
-## ----echo=FALSE,out.width="40%", out.height="20%",fig.cap= 'visualisation of kraken data',fig.show='hold',fig.align='center'----
+## ----includekrakenfig1, eval = TRUE, echo = FALSE, out.width = "40%", out.height = "20%", fig.cap = 'Visualisation of kraken data', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/kraken_base.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # All the nodes that were requested by the user
+#  # All the nodes that were requested by the user.
 #  lifemap(LM_kraken) +
 #    lm_markers(var_fillColor = "coverage_percent", fillColor = "PiYG", display = "requested")
 #  
-#  # Only the nodes that have no descendants
+#  # Only the nodes that have no descendants.
 #  lifemap(LM_kraken) +
 #    lm_markers(var_fillColor = "coverage_percent", fillColor = "PiYG", display = "leaves")
 #  
 
-## ----echo=FALSE,out.width="40%", out.height="20%",fig.cap= 'left : display = "requested", right : display = "leaves"',fig.show='hold',fig.align='center'----
-knitr::include_graphics(c("figures/kraken_requested.png","figures/kraken_leaves.png"))
+## ----includekrakenfig2, eval = TRUE, echo = FALSE, out.width = "40%", out.height = "20%", fig.cap = 'left : display = "requested", right : display = "leaves"', fig.show = 'hold', fig.align = 'center'----
+knitr::include_graphics(c("figures/kraken_requested.png", "figures/kraken_leaves.png"))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # When clicking on a node, display the desired information
+#  # When clicking on a node, display the desired information.
 #  lifemap(LM_kraken) +
 #    lm_markers(var_fillColor = "coverage_percent", fillColor = "PiYG", popup = "name")
 
-## ----echo=FALSE,out.width="40%", out.height="20%",fig.cap= 'Usage of the ```popup``` argument',fig.show='hold',fig.align='center'----
+## ----includekrakenfig3, eval = TRUE, echo = FALSE, out.width = "40%", out.height = "20%", fig.cap = 'Usage of the ```popup``` argument', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/kraken_popup.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # Information on branche's color
+#  # Information on branche's color.
 #  lifemap(LM_kraken) +
 #    lm_branches(var_color = "coverage_percent", color = "PiYG")
 #  
-#  # Information on branche's size
+#  # Information on branche's size.
 #  lifemap(LM_kraken) +
 #    lm_branches(size = "coverage_percent")
-#  
 
-## ----echo=FALSE,out.width="45%", out.height="30%",fig.cap= "left : branche's color, right : branche's size",fig.show='hold',fig.align='center'----
-knitr::include_graphics(c("figures/kraken_branches_color.png","figures/kraken_branches_size.png"))
+## ----includekrakenfig4, eval = TRUE, echo = FALSE, out.width = "45%", out.height = "30%", fig.cap = "left : branche's color, right : branche's size", fig.show = 'hold', fig.align = 'center'----
+knitr::include_graphics(c("figures/kraken_branches_color.png", "figures/kraken_branches_size.png"))
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  data(gen_res)
-#  
 #  LM_gen <- build_Lifemap(df = gen_res, basemap = "ncbi")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  # Visualisation of the Genome size on the fillColor and the TEcontent on the size of markers.
 #  lifemap(LM_gen) +
 #    lm_markers(var_fillColor = "Genome_size", fillColor = "PiYG", radius  = "TEcontent_bp", FUN = mean)
-#  
 
-## ----echo=FALSE,out.width="100%", out.height="20%",fig.cap= 'visualisation of genomics data',fig.show='hold',fig.align='center'----
+## ----includegenfig, eval = TRUE, echo = FALSE, out.width = "100%", out.height = "20%", fig.cap = 'Visualisation of genomics data', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/gen_base.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
@@ -96,40 +93,35 @@ knitr::include_graphics("figures/gen_base.png")
 #  lifemap(LM_gen) +
 #    lm_branches()
 #    lm_markers(var_fillColor = "Genome_size", fillColor = "PiYG", radius  = "TEcontent_bp", FUN = mean)
-#  
 
-## ----echo=FALSE,out.width="100%", out.height="20%",fig.cap= 'visualisation of genomics data with markers and subtree',fig.show='hold',fig.align='center'----
+## ----includegenmarkfig, eval = TRUE, echo = FALSE, out.width = "100%", out.height = "20%", fig.cap = 'Visualisation of genomics data with markers and subtree', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/gen_markers_branches.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  data(eukaryotes_1000)
-#  
 #  LM_eukaryotes <- build_Lifemap(df = eukaryotes_1000, basemap = "ncbi")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  # Visualisation of eukaryotes data.
 #  lifemap(LM_eukaryotes) +
 #    lm_markers()
-#  
 
-## ----echo=FALSE,out.width="50%", out.height="20%",fig.cap= 'Basic visualisation',fig.show='hold',fig.align='center'----
+## ----includeeukaryotefig1, eval = TRUE, echo = FALSE, out.width = "50%", out.height = "20%", fig.cap = 'Basic visualisation', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/eukaryotes_base.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  # Visualisation of Plants.
 #  lifemap(LM_eukaryotes) +
-#    lm_markers(data = LM_eukaryotes$df[LM_eukaryotes$df$Group %in% "Plants",])
-#  
+#    lm_markers(data = LM_eukaryotes$df[LM_eukaryotes$df$Group %in% "Plants", ])
 
-## ----echo=FALSE,out.width="50%", out.height="20%",fig.cap= 'Visualisation of Plants',fig.show='hold',fig.align='center'----
+## ----includeeukaryotefig2, eval = TRUE, echo = FALSE, out.width = "50%", out.height = "20%", fig.cap = 'Visualisation of Plants', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/eukaryotes_data.png")
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  # Visualisation of the maximum assembly level.
 #  lifemap(LM_eukaryotes) +
 #    lm_piecharts(param = "Group")
-#  
 
-## ----echo=FALSE,out.width="50%", out.height="20%",fig.cap= 'Visualisation of the maximum assembly level',fig.show='hold',fig.align='center'----
+## ----includeeukaryotefig3, eval = TRUE, echo = FALSE, out.width = "50%", out.height = "20%", fig.cap = 'Visualisation of the maximum assembly level', fig.show = 'hold', fig.align = 'center'----
 knitr::include_graphics("figures/eukaryotes_piecharts.png")
 
