@@ -7,16 +7,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## ----load, eval = FALSE-------------------------------------------------------
 # require("LifemapR")
 
-## ----buildLF, eval = TRUE, echo = FALSE, results = FALSE, warning = FALSE-----
-require("LifemapR", quietly = TRUE)
-
-data(eukaryotes_1000)
-LM_eukaryotes <- build_Lifemap(eukaryotes_1000)
-
-## ----printLF, eval = TRUE, echo = FALSE---------------------------------------
-if (is.lifemap_obj(LM_eukaryotes))
-  LM_eukaryotes$df[6:10, 1:5]
-
 ## ----eval = FALSE-------------------------------------------------------------
 # require("LifemapR")
 # 

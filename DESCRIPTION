@@ -1,6 +1,6 @@
 Package: LifemapR
 Title: Data Visualisation on 'Lifemap' Tree
-Version: 1.1.5
+Version: 1.1.6
 Imports: leaflet, shiny, jsonlite, dplyr, tidyr, leaflet.minicharts,
         htmltools, rlang, RCurl, fastmatch, arrow
 Authors@R: c(
@@ -20,12 +20,13 @@ URL: https://lifemap-tol.github.io/LifemapR/,
         https://github.com/Lifemap-ToL/LifemapR
 BugReports: https://github.com/Lifemap-ToL/LifemapR/issues
 NeedsCompilation: no
-Packaged: 2025-03-06 08:16:02 UTC; siberchicot
+Packaged: 2025-08-26 13:20:47 UTC; siberchicot
 Author: Cassandra Bompard [aut],
-  Damien M. de Vienne [aut] (<https://orcid.org/0000-0001-9532-5251>),
-  Julien Barnier [aut] (<https://orcid.org/0000-0002-8249-0909>),
-  Aurélie Siberchicot [ctb, cre]
-    (<https://orcid.org/0000-0002-7638-8318>)
+  Damien M. de Vienne [aut] (ORCID:
+    <https://orcid.org/0000-0001-9532-5251>),
+  Julien Barnier [aut] (ORCID: <https://orcid.org/0000-0002-8249-0909>),
+  Aurélie Siberchicot [ctb, cre] (ORCID:
+    <https://orcid.org/0000-0002-7638-8318>)
 Maintainer: Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
 Repository: CRAN
-Date/Publication: 2025-03-06 10:40:12 UTC
+Date/Publication: 2025-08-27 08:10:26 UTC
